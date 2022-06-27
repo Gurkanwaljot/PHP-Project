@@ -1,0 +1,106 @@
+
+/*Body CSS*/
+body {
+	font-family: "Roboto", Arial, sans-serif;
+	min-height: 100vh;
+	background-color: white;
+        color:#00344d;
+}
+
+
+/*Header CSS*/
+.header {
+	
+    position: fixed;
+    width: 100%;
+    height: 24%;
+    text-align:center;
+    top:0;
+    left:0;
+    background-color: #00344d;
+     color: white;
+     
+}
+
+.header a {
+    
+  padding-left: 2em;
+  padding-right: 2em;
+  font-size: 10px;
+  color: #ffffff;
+  text-decoration: none;
+
+}
+
+.header a:hover{
+
+  font-size: 12px;
+}
+
+
+
+.header::before {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	/*top: 0;*/
+        /* bottom:3.6em; */
+	width: 100%;
+	height: 10em;
+	z-index: -1;
+	transform: skewY(-3deg);
+	background: 
+		linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+		linear-gradient(#4e4376, #2b5876);
+	background-size: cover;
+	border-bottom: .4em solid #fff;
+        border-top: .2em solid #fff;
+}
+
+/*Midsection CSS*/
+.body{
+
+    margin: auto;
+    width: 80%;
+    padding-top: 200px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 100px;
+    background-color: #e6faff;
+    
+	
+}
+.body a {
+    
+  padding-left: 2em;
+  padding-right: 2em;
+  font-size: 10px;
+  color: #000000;
+  text-decoration: none;
+  border:2px;
+
+}
+
+table {
+    
+     margin-left: auto;
+     margin-right: auto;
+     margin-top: 100px;
+}
+
+
+/*Footer CSS*/
+.footer {
+    
+    
+  position: fixed;
+  width: 100%;
+  content: "";
+  clear: both;
+  left: 0;
+  bottom: 0;
+  background-color:  #00344d;
+  text-align: center;
+  color: white;
+}
