@@ -1,0 +1,220 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:8889
+-- Generation Time: Dec 08, 2021 at 03:17 AM
+-- Server version: 5.7.34
+-- PHP Version: 8.0.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `jobPortal`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appliedJob`
+--
+
+CREATE TABLE `appliedJob` (
+  `studentID` int(100) NOT NULL,
+  `jobID` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employer`
+--
+
+CREATE TABLE `employer` (
+  `employerID` int(100) NOT NULL,
+  `employerName` varchar(255) NOT NULL,
+  `employerDescription` varchar(5000) NOT NULL,
+  `userID` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `employer`
+--
+
+INSERT INTO `employer` (`employerID`, `employerName`, `employerDescription`, `userID`) VALUES
+(6, 'Kick', 'test all stuff', 8),
+(8, 'My test employer', '        All the feeels right now spppp good helooooooooo thanks for all your help        ', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job`
+--
+
+CREATE TABLE `job` (
+  `jobID` int(100) NOT NULL,
+  `jobType` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `jobDescription` varchar(5000) NOT NULL,
+  `jobProvince` varchar(2) CHARACTER SET utf8mb4 NOT NULL,
+  `jobLocation` varchar(300) NOT NULL,
+  `jobProgram` varchar(255) NOT NULL,
+  `minimumYear` varchar(50) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0',
+  `employerID` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
+
+CREATE TABLE `login` (
+  `userID` int(100) NOT NULL,
+  `userType` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`userID`, `userType`, `username`, `password`) VALUES
+(1, 'admin', 'admin1', 'admin1'),
+(7, 'student', 'student1', 'student1'),
+(8, 'employer', 'employer2', 'employer2'),
+(9, 'employer', 'employer1', 'employer1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `studentID` int(100) NOT NULL,
+  `userID` int(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `university` varchar(255) NOT NULL,
+  `program` varchar(255) NOT NULL,
+  `schoolYear` varchar(50) NOT NULL,
+  `province` varchar(2) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`studentID`, `userID`, `name`, `university`, `program`, `schoolYear`, `province`) VALUES
+(1, 7, 'John Rubicube', 'UFV', 'Science', '3rd', 'AB');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `appliedJob`
+--
+ALTER TABLE `appliedJob`
+  ADD KEY `jobID` (`jobID`),
+  ADD KEY `studentID` (`studentID`);
+
+--
+-- Indexes for table `employer`
+--
+ALTER TABLE `employer`
+  ADD PRIMARY KEY (`employerID`),
+  ADD UNIQUE KEY `employerName` (`employerName`),
+  ADD KEY `userID` (`userID`);
+
+--
+-- Indexes for table `job`
+--
+ALTER TABLE `job`
+  ADD PRIMARY KEY (`jobID`),
+  ADD KEY `employerID` (`employerID`);
+
+--
+-- Indexes for table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`userID`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`studentID`),
+  ADD UNIQUE KEY `userID` (`userID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `employer`
+--
+ALTER TABLE `employer`
+  MODIFY `employerID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `job`
+--
+ALTER TABLE `job`
+  MODIFY `jobID` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `login`
+--
+ALTER TABLE `login`
+  MODIFY `userID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `studentID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `appliedJob`
+--
+ALTER TABLE `appliedJob`
+  ADD CONSTRAINT `appliedjob_ibfk_1` FOREIGN KEY (`jobID`) REFERENCES `job` (`jobID`),
+  ADD CONSTRAINT `appliedjob_ibfk_2` FOREIGN KEY (`studentID`) REFERENCES `students` (`studentID`);
+
+--
+-- Constraints for table `employer`
+--
+ALTER TABLE `employer`
+  ADD CONSTRAINT `employer_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `login` (`userID`);
+
+--
+-- Constraints for table `job`
+--
+ALTER TABLE `job`
+  ADD CONSTRAINT `job_ibfk_1` FOREIGN KEY (`employerID`) REFERENCES `employer` (`employerID`);
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `login` (`userID`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
